@@ -1,7 +1,10 @@
+import CardDesign from "./RightSidebarComponents/CardDesign";
+
 export default function RightSidebar() {
   return (
-    <>
-      <div>Test RightSidebar</div>
-    </>
+    <div className="flex flex-col gap-5">
+      <CardDesign cardTitle="Popular profiles" cardComponent={"test"} />
+
+    </div>
   );
 }
