@@ -1,32 +1,29 @@
 import Logo from "@/public/logo.png";
-import LogoAvatar from "@/public/Avatar.jpg";
-
 import Image from "next/image";
-
-import * as React from "react";
-
 import TextField from "@mui/material/TextField";
+import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import Avatar from "@mui/material/Avatar";
+import { deepPurple } from "@mui/material/colors";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
-import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
-import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import { Avatar } from "@mui/material";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 export default function Header() {
   return (
-    <header className="w-full flex justify-between px-7  py-6 items-center border-b-2 border-gray-200">
-      <Image src={Logo} />
+    <header className="flex justify-between px-7 py-6 border-b-2 border-gray-200">
+      <Image src={Logo} height={55} />
 
       <TextField
-        sx={{
-          width: 750,
-        }}
-        variant="outlined"
+        id="outlined-basic"
         placeholder="Search now..."
+        sx={{
+          width: "750px",
+          borderRadius: "500px",
+        }}
         InputProps={{
           style: {
-            borderRadius: "20px",
+            borderRadius: "1000px",
           },
           startAdornment: (
             <InputAdornment position="start">
@@ -36,30 +33,28 @@ export default function Header() {
         }}
       />
 
-      <div className="flex  items-center gap-3">
+      <div className="flex items-center gap-3">
         <HeadsetMicIcon
           sx={{
-            color: "#374151",
             fontSize: 42,
+            color: "#374151",
             border: "1px solid #e5e7eb",
             padding: "5px",
             borderRadius: "50%",
           }}
         />
-        <NotificationsActiveIcon
+        <NotificationsIcon
           sx={{
-            color: "#374151",
             fontSize: 42,
+            color: "#374151",
             border: "1px solid #e5e7eb",
             padding: "5px",
             borderRadius: "50%",
           }}
         />
-        <span className="text-xl font-bold ml-7">Vinc.rangga</span>
-        <Avatar>
-          <Image src={LogoAvatar} />
-        </Avatar>
-        <ArrowDropDownIcon sx={{ fontSize: 28 }} />
+        <span className="text-xl font-bold ml-7">Vinc.ragga</span>
+        <Avatar sx={{ bgcolor: deepPurple[500] }}>VR</Avatar>
+        <ExpandMoreIcon sx={{ fontSize: 28 }} />
       </div>
     </header>
   );
