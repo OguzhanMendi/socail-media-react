@@ -2,6 +2,8 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
 import axios from "axios";
 export default function RegisterPage() {
   // const [name, setName] = useState("");
@@ -10,6 +12,12 @@ export default function RegisterPage() {
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
   // const [password2, setPassword2] = useState("");
+
+  const router = useRouter();
+
+  const mainPage = () => {
+    router.push("/");
+  };
 
   //  CheckBox State'i
   const [termsCheck, setTermsCheck] = useState(false);
@@ -62,6 +70,7 @@ export default function RegisterPage() {
     if (response.status === 200) {
       setUserToken(response.data.token);
       localStorage.setItem("user_token", response.data.token);
+      mainPage();
     } else {
       alert("An Error occured while creating your account.");
     }
