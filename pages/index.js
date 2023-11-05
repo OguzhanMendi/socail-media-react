@@ -7,14 +7,14 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className="flex p-12 gap-20">
-        <div className="w-1/5">
+      <div className="flex md:p-12 p-3 gap-20">
+        <div className="w-1/5  md:block hidden">
           <LeftSidebar />
         </div>
-        <div className="w-3/5">
+        <div className="md:w-3/5 w-full">
           <ContentArea />
         </div>
-        <div className="w-1/5">
+        <div className="w-1/5 md:block hidden">
           <RightSidebar />
         </div>
       </div>
