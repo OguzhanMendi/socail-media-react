@@ -1,23 +1,31 @@
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { useEffect } from "react";
+
 export default function LoginPage() {
+  useEffect(() => {
+    let userToken = localStorage.getItem("user_token");
+
+    if (userToken) {
+      window.location.href = "/";
+    }
+  }, []);
+
   return (
     <div className="bg-orange-200 h-screen flex justify-center items-center">
       <div className="bg-white w-1/2 p-5 rounded-lg">
-        <h2 className="text-center text-2xl font-bold text-gray-300">
+        <h2 className="text-center text-2xl font-semibold text-gray-500">
           Login your account
         </h2>
-
         <p className="text-center text-gray-500">
-          let's login your account and be socialized
+          Let's login your account and be socialized!
         </p>
-
-        <div className="flex justify-center flex-col gap-5 mt-10">
+        <div className="flex flex-col justify-center gap-5 mt-10">
           <TextField
             id="outlined-basic"
             label="Enter your e-mail"
-            variant="outlined"
             type="email"
+            variant="outlined"
             sx={{
               width: "100%",
             }}
@@ -25,27 +33,25 @@ export default function LoginPage() {
           <TextField
             id="outlined-basic"
             label="Enter your password"
-            variant="outlined"
             type="password"
+            variant="outlined"
             sx={{
               width: "100%",
             }}
           />
-
           <a href="#" className="text-end text-blue-500">
-            Forgot your Password?
+            Forgot your password?
           </a>
-
           <Button
             variant="contained"
-            className="bg-gray-900 py-3 text-lg"
+            className="bg-gray-800 py-3 text-lg mt-10"
             sx={{
               "&:hover": {
                 backgroundColor: "#2A3442",
               },
             }}
           >
-            LOGIN YOUR ACCOUNT
+            Login Your Account
           </Button>
         </div>
       </div>

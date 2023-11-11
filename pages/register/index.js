@@ -2,29 +2,26 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-
 import axios from "axios";
+
 export default function RegisterPage() {
-  // const [name, setName] = useState("");
-  // const [surName, setsurName] = useState("");
-  // const [userName, setuserName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [password2, setPassword2] = useState("");
+  /*   
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState(""); 
+*/
 
-  const router = useRouter();
-
-  const mainPage = () => {
-    router.push("/");
-  };
-
-  //  CheckBox State'i
   const [termsCheck, setTermsCheck] = useState(false);
   const [userToken, setUserToken] = useState("");
+  // let termsCheck = false;
+  // termsCheck = true;   --> setTermsCheck(true);
 
   useEffect(() => {
     let userToken = localStorage.getItem("user_token");
+
     if (userToken) {
       window.location.href = "/";
     }
@@ -39,14 +36,11 @@ export default function RegisterPage() {
     password2: "",
   });
 
-  // tek bir fonksiyonda değiştirme
   const handleOnChange = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
   };
 
   const createAccountService = async () => {
-    // http://localhost:3000/auth/register
-
     const requestBody = {
       name: form.name,
       lastname: form.surname,
@@ -70,17 +64,16 @@ export default function RegisterPage() {
     if (response.status === 200) {
       setUserToken(response.data.token);
       localStorage.setItem("user_token", response.data.token);
-      mainPage();
     } else {
-      alert("An Error occured while creating your account.");
+      alert("An error occured while creating your account.");
     }
   };
 
   const handleSubmit = async () => {
-    if (!termsCheck) {
-      alert("Lütfen tikleyin");
+    if (termsCheck === false) {
+      alert("You must accept the terms of use and privacy policy.");
     } else if (form.password !== form.password2) {
-      alert("Şifreler Aynı Değil.");
+      alert("Your passwords doesn't match.");
     } else {
       await createAccountService();
     }
@@ -88,123 +81,108 @@ export default function RegisterPage() {
 
   return (
     <div className="bg-orange-200 h-screen flex justify-center items-center">
-      <div className="bg-white w-1/2 p-5 rounded-lg shadow-lg shadow-cyan-500/50">
-        <h2 className="text-center text-2xl font-bold text-gray-300">
-          Create new account
+      <div className="bg-white w-1/2 p-5 rounded-lg">
+        <h2 className="text-center text-2xl font-semibold text-gray-500">
+          Create a new account
         </h2>
-
         <p className="text-center text-gray-500">
-          let's create your account and be socialized
+          Let's create your account and be socialized!
         </p>
-
-        <div className="flex justify-center flex-col gap-5 mt-10">
+        <div className="flex flex-col justify-center gap-5 mt-10">
           {/* 
-          
-           BU KOMUT OBJELERİ DÜZ STRİNG HALİNE ÇEVİRİR.
-          {JSON.stringify(form)}
-           
-          
+          BU KOMUT OBJELERI DÜZ STRING HALINDE GÖSTERİR
+          {JSON.stringify()} 
           */}
-
           <div className="flex gap-5">
             <TextField
               id="outlined-basic"
               label="Name"
-              name="name"
               value={form.name}
+              name="name"
               onChange={(event) => handleOnChange(event)}
-              variant="outlined"
               type="text"
+              variant="outlined"
               sx={{
                 width: "100%",
               }}
             />
-
             <TextField
               id="outlined-basic"
               label="Surname"
               name="surname"
               value={form.surname}
               onChange={(event) => handleOnChange(event)}
-              variant="outlined"
               type="text"
+              variant="outlined"
               sx={{
                 width: "100%",
               }}
             />
           </div>
-
           <div className="flex gap-5">
             <TextField
               id="outlined-basic"
-              label="Enter your Username"
               name="username"
               value={form.username}
               onChange={(event) => handleOnChange(event)}
-              variant="outlined"
+              label="Enter your username"
               type="text"
+              variant="outlined"
               sx={{
                 width: "100%",
               }}
             />
-
             <TextField
               id="outlined-basic"
-              label="Enter your e-mail"
-              name="email"
               value={form.email}
+              name="email"
               onChange={(event) => handleOnChange(event)}
-              variant="outlined"
+              label="Enter your e-mail"
               type="email"
+              variant="outlined"
               sx={{
                 width: "100%",
               }}
             />
           </div>
-
           <TextField
             id="outlined-basic"
             label="Enter your password"
+            type="password"
             name="password"
             value={form.password}
             onChange={(event) => handleOnChange(event)}
             variant="outlined"
-            type="password"
             sx={{
               width: "100%",
             }}
           />
-
           <TextField
             id="outlined-basic"
-            label=" Re-Type your password"
+            label="Re-type your password"
+            type="password"
+            variant="outlined"
             name="password2"
             value={form.password2}
             onChange={(event) => handleOnChange(event)}
-            variant="outlined"
-            type="password"
             sx={{
               width: "100%",
             }}
           />
-
-          <div className="flex  items-center">
+          <div className="flex items-center">
             <Checkbox
               checked={termsCheck}
               onChange={() => {
                 setTermsCheck(!termsCheck);
               }}
             />
-            <span>I Accept the privacy Policy adn Trems Of use</span>
+            <span>I accept the Privacy Policy and Terms of Use.</span>
           </div>
-
           <Button
             variant="contained"
             disabled={termsCheck === false}
-            onClick={() => {
-              handleSubmit();
-            }}
-            className="bg-gray-900 py-3 text-lg"
+            className="bg-gray-800 py-3 text-lg mt-10"
+            onClick={() => handleSubmit()}
             sx={{
               "&:hover": {
                 backgroundColor: "#2A3442",
