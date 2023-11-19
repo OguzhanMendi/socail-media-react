@@ -1,54 +1,75 @@
 import Avatar from "@mui/material/Avatar";
+import { useState,useEffect } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 export default function PopularProfileCard() {
-  const userData = [
-    {
-      avatar: "https://mui.com/static/images/avatar/1.jpg",
-      fullname: "Canberk Beren",
-      followerCount: "101.2K",
-    },
-    {
-      avatar: "https://mui.com/static/images/avatar/2.jpg",
-      fullname: "John Doe",
-      followerCount: "93.5K",
-    },
-    {
-      avatar: "https://mui.com/static/images/avatar/3.jpg",
-      fullname: "David Gilmour",
-      followerCount: "45.1K",
-    },
-    {
-      avatar: "https://mui.com/static/images/avatar/4.jpg",
-      fullname: "Mehmet Yılmaz",
-      followerCount: "259.9K",
-    },
-    {
-      avatar: "https://mui.com/static/images/avatar/5.jpg",
-      fullname: "Jane Doe",
-      followerCount: "92.5K",
-    },
-  ];
+  const [userData,setUserData] = useState([]);
+  const currentUser = useSelector((state)=> state.user);
+
+  const getUserData = async ()=>{
+     const response = await axios.get("http://localhost:3000/users/",{
+      headers:{
+        Authorization: `Bearer ${localStorage.getItem('user_token')}`,
+      }
+
+
+     });
+
+     setUserData(response.data);
+  }
+
+  useEffect(()=>{
+    getUserData();
+  },[])
+
+  const UserFollowOrUnollow = async (id)=>{
+    const serviceUrl =`http://localhost:3000/users/follow/${id}`
+    const response = await axios.post(serviceUrl,{},{
+      headers:{
+        Authorization: `Bearer ${localStorage.getItem('user_token')}`,
+      }
+    })
+
+    if(response.status === 200){
+      getUserData();
+
+    }
+  }
 
   return (
     <>
-      {userData.map((user) => {
+   
+      {userData?.users?.map((user) => {
         return (
           <div>
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <Avatar alt="Remy Sharp" src={user.avatar} />
                 <div>
-                  <span className="text-lg font-semibold">{user.fullname}</span>
+                  <span className="text-sm font-semibold">@{user.username}</span>
                   <div className="flex gap-1 text-gray-400">
-                    <span>{user.followerCount} Followers</span>
+                    <span>{user.userFollowers?.length || 0} Followers</span>
                   </div>
                 </div>
               </div>
 
-              <div className="text-gray-400">
-                <button className="bg-rose-500 text-white rounded-full px-3 py-1">
+              <div className="text-gray-400 text-sm">
+                {
+                  user?.userFollowers.includes(currentUser.user._id) ?
+                ( <button className="bg-gray-500 text-white rounded-full px-3 py-1" onClick={()=>{
+                  UserFollowOrUnollow(user._id);
+                }}>
+                  UnFollow
+                </button>) 
+                :
+                ( <button className="bg-rose-500 text-white rounded-full px-3 py-1" onClick={()=>{
+                  UserFollowOrUnollow(user._id);
+                }}>
+
                   Follow
-                </button>
+                </button>)
+                }
               </div>
             </div>
           </div>
