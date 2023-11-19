@@ -39,6 +39,8 @@ export default function ContentArea() {
   }, [contentPing]);
 
 
+
+
   useEffect(() => {
     const getContents = async () => {
       try{
@@ -71,8 +73,10 @@ export default function ContentArea() {
             username={content.user[0].username}
             createdOn={dateFormatter(content.createdAt)}
             content={content.content}
+            contentId={content.id}
             likeCount={content.likes.lenth || 0}
             commentCount={0}
+            likes={content.likes}
           />
         );
       })}
