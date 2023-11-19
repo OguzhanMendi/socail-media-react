@@ -12,11 +12,11 @@ export default function Header () {
       }}>
              <img src="https://picsum.photos/250/250" className="rounded-full "/>
         </div>
-      <div className="flex justify-around items-center  w-full p-10 " >
+      <div className="flex justify-around items-center  p-10 pl-32  w-full  " >
         
         <div>
-            <h2>Charles Doe</h2>
-            <h4>UI/UIX degisner</h4>
+            <h2 className="text-3xl text-purple-700 font-bold">Charles Doe</h2>
+            <h4 className="text-purple-700">UI/UIX degisner</h4>
         </div>
         <div>
             <button className="bg-purple-700 text-white px-5 py-3 rounded-full">Follow</button>
